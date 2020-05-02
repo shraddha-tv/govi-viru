@@ -196,7 +196,7 @@
                 console.log({ token })
                 let headers = { Authorization: 'Bearer ' + token }
                 // let me = await axios.get('/api/me', { headers })
-                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                let me = await axios.get('/api/phone?phoneNo=0712576076', { headers })
                 console.log({ me })
             }
 
