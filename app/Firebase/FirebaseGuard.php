@@ -23,7 +23,7 @@ class FirebaseGuard
             return new User($token->getClaims());
         }
         catch (\Exception $e) {
-            return;
+            return $e;
         }
     }
 }
