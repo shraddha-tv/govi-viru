@@ -41,3 +41,7 @@ Route::get('/me', function (Request $request) {
     return User::find(1);
 })->middleware('auth:api');
 Route::get('/phone', 'API\UserController@getUser')->middleware('auth:api');
+
+Route::get('/test', function () {
+    return User::all();
+});
