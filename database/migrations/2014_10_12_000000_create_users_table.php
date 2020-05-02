@@ -21,13 +21,15 @@ class CreateUsersTable extends Migration
             $table->decimal('long',10,8);
             $table->string('phoneNo')->unique();
             $table->string('whatsappNo')->nullable();
-            $table->integer('role')->default(1);
+            $table->unsignedBigInteger('role')->default(3);
             $table->string('password')->nullable();
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('role')->references('id')->on('roles')->onUpdate('cascade');
         });
     }
 

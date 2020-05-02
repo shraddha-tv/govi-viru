@@ -15,7 +15,7 @@ class CreateVegetablesTable extends Migration
     {
         Schema::create('vegetables', function (Blueprint $table) {
             $table->id();
-            $table->integer('vegId');
+            $table->unsignedBigInteger('vegId');
             $table->string('grade');
             $table->string('rate');
             $table->string('quantity');
@@ -25,7 +25,8 @@ class CreateVegetablesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('farmerId')->references('id')->on('users')->onUpdate('cascade');;
+            $table->foreign('vegId')->references('id')->on('categories')->onUpdate('cascade');
+            $table->foreign('farmerId')->references('id')->on('users')->onUpdate('cascade');
 
         });
     }

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'address','lat','long','phoneNo','whatsappNo','role','password',
+        'name', 'address','lat','long','phoneNo','whatsappNo','role','email','password',
     ];
 
     /**
@@ -46,5 +46,9 @@ class User extends Authenticatable
 
     public function vegetables(){
         return $this->hasMany('App\Model\Vegetable','farmerId');
+    }
+
+    public function roleName(){
+        return $this->belongsTo('App\Model\Role','role');
     }
 }

@@ -9,10 +9,101 @@ use Validator;
 
 use App\User; 
 use App\Http\Resources\Farmer as FarmerResource; 
+use App\Http\Resources\User as UserResource; 
+use App\Http\Resources\VegetableList as VegetableListResource; 
 
 class UserController extends Controller 
 {
     public $successStatus = 200;
+
+    /**
+     * Get All Users
+     * 
+     */
+    public function index(){
+        return UserResource::collection(User::paginate());
+    }
+    /**
+     * Get All Users
+     * 
+     */
+    public function store(Request $request){
+      try{
+
+        $request->validate([
+          "name" => "required",
+          "address" => "required",
+          "lat" => "required",
+          "long" => "required",
+          "phoneNo" => "required",
+          "whatsappNo" => "required",
+        ]);
+        $request['password'] = bcrypt($request->password); 
+        $user = User::create($request->all());
+        
+        return response()->json(["message"=>"Successfully Create User"], 200); 
+      }catch(\Exception $e){
+          return response()->json(["message"=>$e->getMessage()], 200); 
+      }
+    }
+
+    /**
+     * 
+     * 
+     */
+    public function show($id){
+        $user = User::findOrFail($id);
+        $vegeList = VegetableListResource::collection($user->vegetables);
+        return response()->json(["user"=>$user, "vegeList"=>$vegeList], 200); 
+    }
+
+
+    /**
+     * Get All Users
+     * 
+     */
+    public function update(Request $request, $id){
+      try{
+
+        $request->validate([
+          "name" => "required",
+          "address" => "required",
+          "lat" => "required",
+          "long" => "required",
+          "phoneNo" => "required",
+          "whatsappNo" => "required",
+        ]);
+            
+        $user = User::findOrFail($id);
+        unset($request->password);
+        $user->update($request->all());
+        
+        return response()->json(["message"=>"Successfully Update User"], 200); 
+      }catch(\Exception $e){
+          return response()->json(["message"=>$e->getMessage()], 200); 
+      }
+    }
+    /**
+     * Get All Users
+     * 
+     */
+    public function destroy($id){
+      try{
+ 
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return response()->json(["message"=>"Successfully Delete User"], 200); 
+      }catch(\Exception $e){
+          return response()->json(["message"=>$e->getMessage()], 200); 
+      }
+    }
+
+
+
+    
+
+
     /** 
      * login api 
      * 
@@ -31,9 +122,8 @@ class UserController extends Controller
             ];
         
             $requests = Request::create('/oauth/token', 'POST', $data);
-            $response = app()->handle($requests);
-            $rData = json_decode($response->getContent());   
-
+            $responses = app()->handle($requests);
+            $rData = json_decode($responses->getContent());
             return response()->json([
                 "status"=>0,
                 "auth"=> $rData->access_token,
@@ -128,4 +218,5 @@ class UserController extends Controller
 
         return response()->json($user, $this->successStatus); 
     } 
+
 }

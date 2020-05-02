@@ -18,9 +18,18 @@ class Vegetable extends Model
         'vegId',
         'grade',
         'rate',
-        'quantity',
+        'quantity', 
         'date',
         'freeQuantity',
         'farmerId'
     ];
+
+    public function farmer(){
+        return $this->belongsTo('App\User','farmerId');
+    }
+
+    public function category(){
+        return $this->belongsTo('App\Model\Category','vegId');
+    }
+
 }

@@ -7,7 +7,6 @@ window.Vue = require('vue');
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-
 Vue.use(Vuetify)
 
 const opts = {}
@@ -28,6 +27,7 @@ require('./bootstrap');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/index.vue').default);
+Vue.component('custom-table', require('./components/Common/Table.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,9 +35,11 @@ Vue.component('example-component', require('./components/index.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import router from './router';
+import store from './store';
 
 const app = new Vue({
     el: '#app',
     vuetify,
-    router
+    router,
+    store
 });
