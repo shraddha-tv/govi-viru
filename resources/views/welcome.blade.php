@@ -195,8 +195,8 @@
                 let token = await creds.user.getIdToken();
                 console.log({ token })
                 let headers = { Authorization: 'Bearer ' + token }
-                // let me = await axios.get('/api/me', { headers })
-                let me = await axios.get('/api/phone?phoneNo=0712576076', { headers })
+                let me = await axios.get('/api/me', { headers })
+                // let me = await axios.get('/api/phone?phoneNo=0712576076', { headers })
                 console.log({ me })
             }
 
@@ -205,16 +205,16 @@
 
             // Initialize Firebase
 
-            async function signin() {
-                console.log('signing in')
-                let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
-                console.log({ creds })
-                let token = await creds.user.getIdToken()
-                console.log({ token })
-                let headers = { Authorization: 'Bearer ' + token }
-                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
-                console.log({ me })
-            }
+            // async function signin() {
+            //     console.log('signing in')
+            //     let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
+            //     console.log({ creds })
+            //     let token = await creds.user.getIdToken()
+            //     console.log({ token })
+            //     let headers = { Authorization: 'Bearer ' + token }
+            //     let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+            //     console.log({ me })
+            // }
           </script>
     </body>
 </html>
