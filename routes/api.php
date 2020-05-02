@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('vegetableList', 'API\VegetableController@createVegeList');
     Route::apiResource('vegetable', 'API\VegetableController');
 });
+
+
+
+Route::get('/me', function (Request $request) {
+    return (array) $request->user();
+})->middleware('auth:api');
+Route::get('/phone', 'API\UserController@getUser')->middleware('auth:api');

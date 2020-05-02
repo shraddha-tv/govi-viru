@@ -85,16 +85,46 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <button onclick="signin()">get data</button>
+
                 </div>
             </div>
         </div>
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+        <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+        <script>
+            // TODO: Replace the following with your app's Firebase project configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyA3bkTnG7jah3NYVlDfNWTeDLo-1oA9fVs",
+                authDomain: "fir-phone-auth-test-1-643ec.firebaseapp.com",
+                databaseURL: "https://fir-phone-auth-test-1-643ec.firebaseio.com",
+                projectId: "fir-phone-auth-test-1-643ec",
+                storageBucket: "fir-phone-auth-test-1-643ec.appspot.com",
+                messagingSenderId: "720383824990",
+                appId: "1:720383824990:web:f58b702809855682f310cf",
+                measurementId: "G-LJ9T6T4KHN"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            async function signin() {
+                console.log('signing in')
+                let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
+                console.log({ creds })
+                let token = await creds.user.getIdToken()
+                console.log({ token })
+                let headers = { Authorization: 'Bearer ' + token }
+                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                console.log({ me })
+            }
+          </script>
     </body>
 </html>
