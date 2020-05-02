@@ -81,11 +81,13 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    ගොවි විරු
                 </div>
 
                 <div class="links">
-                    <button onclick="signin()">get data</button>
+                    <button onclick="verify()">get data</button>
+                    <button onclick="myAuth()">My auth</button>
+                    <button id="submit-button" onclick="onSignInSubmit()">submit</button>
 
                 </div>
             </div>
@@ -101,6 +103,10 @@
         <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
         <script>
+
+
+
+
             // TODO: Replace the following with your app's Firebase project configuration
             var firebaseConfig = {
                 apiKey: "AIzaSyA3bkTnG7jah3NYVlDfNWTeDLo-1oA9fVs",
@@ -112,9 +118,93 @@
                 appId: "1:720383824990:web:f58b702809855682f310cf",
                 measurementId: "G-LJ9T6T4KHN"
             };
+            var phoneAuth = {
+                apiKey: "AIzaSyCmppojku5A2jWxrWWrFLpvTZhyg0FKtv8",
+                authDomain: "goviwiru.firebaseapp.com",
+                databaseURL: "https://goviwiru.firebaseio.com",
+                projectId: "goviwiru",
+                storageBucket: "goviwiru.appspot.com",
+                messagingSenderId: "789323971000",
+                appId: "1:789323971000:web:8f2e792d1aeb224bc9b74d",
+                // measurementId: "G-LJ9T6T4KHN"
+            };
+            firebase.initializeApp(phoneAuth);
+            // firebase.initializeApp(firebaseConfig);
+
+
+
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('submit-button', {
+                'size': 'invisible',
+                'callback': function(response) {
+                    // reCAPTCHA solved, allow signInWithPhoneNumber.
+                    onSignInSubmit();
+                }
+                });
+
+            async function myAuth() {
+                console.log('signing in')
+
+                let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
+                console.log({ creds })
+                let token = await creds.user.getIdToken()
+                console.log({ token })
+                let headers = { Authorization: 'Bearer ' + token }
+                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                console.log({ me })
+
+
+
+            }
+
+
+
+            async function onSignInSubmit() {
+                console.log('signing in')
+                var phoneNumber = "+940712576076";
+                var appVerifier = window.recaptchaVerifier;
+                let creds = await firebase
+                .auth()
+                .signInWithPhoneNumber(phoneNumber, appVerifier)
+                .then(function(confirmationResult) {
+                    window.confirmationResult = confirmationResult;
+                    // console.log("confirmationResult: ");
+                    console.log(confirmationResult);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+                // let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
+                // console.log({ creds })
+                // let token = await creds.user.getIdToken()
+                // console.log({ token })
+                // let headers = { Authorization: 'Bearer ' + token }
+                // let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                // console.log({ me })
+            }
+
+            async function verify(verificationId){
+                var credential = firebase.auth.PhoneAuthProvider.credential(window.confirmationResult.verificationId,'123456');
+
+                console.log(credential);
+
+                // await firebase.auth().signInWithCredential(credential)
+                //     .then(function (result){
+                //         console.log(result)
+                //     });
+                let creds = await firebase.auth().signInWithCredential(credential);
+                let token = await creds.user.getIdToken();
+                console.log({ token })
+                let headers = { Authorization: 'Bearer ' + token }
+                // let me = await axios.get('/api/me', { headers })
+                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                console.log({ me })
+            }
+
+
+
 
             // Initialize Firebase
-            firebase.initializeApp(firebaseConfig);
+
             async function signin() {
                 console.log('signing in')
                 let creds = await firebase.auth().signInWithEmailAndPassword('test@testing.lk', 'test@testing.lk')
