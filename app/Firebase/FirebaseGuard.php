@@ -2,7 +2,7 @@
 
 namespace App\Firebase;
 
-use App\Firebase\User;
+use App\User;
 use Firebase\Auth\Token\Verifier;
 
 class FirebaseGuard
