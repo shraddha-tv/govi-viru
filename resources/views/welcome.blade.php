@@ -85,9 +85,9 @@
                 </div>
 
                 <div class="links">
-                    <button onclick="verify()">get data</button>
-                    <button onclick="myAuth()">My auth</button>
-                    <button id="submit-button" onclick="onSignInSubmit()">submit</button>
+                    {{-- <button onclick="myAuth()">My auth</button> --}}
+                    <button id="submit-button" onclick="onSignInSubmit()">Click for geting verification code</button>
+                    <button onclick="verify()">Login after getting verification code</button>
 
                 </div>
             </div>
@@ -149,7 +149,7 @@
                 let token = await creds.user.getIdToken()
                 console.log({ token })
                 let headers = { Authorization: 'Bearer ' + token }
-                let me = await axios.get('/api/phone?phoneNo=0713095808', { headers })
+                let me = await axios.get('/api/phone?phoneNo=0712576076', { headers })
                 console.log({ me })
 
 
