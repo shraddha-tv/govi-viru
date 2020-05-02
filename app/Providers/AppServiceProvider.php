@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Verifier::class, function ($app) {
-            return new Verifier('fir-phone-auth-test-1-643ec');
+            return new Verifier('goviwiru');
             // return new Verifier(config('services.firebase.project_id'));
         });
     }

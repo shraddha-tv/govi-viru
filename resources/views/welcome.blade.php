@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <button onclick="myAuth()">My auth</button>
+                    {{-- <button onclick="myAuth()">My auth</button> --}}
                     <button id="submit-button" onclick="onSignInSubmit()">Click for geting verification code</button>
                     <button onclick="verify()">Login after getting verification code</button>
 
@@ -128,8 +128,8 @@
                 appId: "1:789323971000:web:8f2e792d1aeb224bc9b74d",
                 // measurementId: "G-LJ9T6T4KHN"
             };
-            // firebase.initializeApp(phoneAuth);
-            firebase.initializeApp(firebaseConfig);
+            firebase.initializeApp(phoneAuth);
+            // firebase.initializeApp(firebaseConfig);
 
 
 
