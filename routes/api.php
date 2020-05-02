@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 Route::get('/me', function (Request $request) {
     // return (array) $request->user();
-    return User::find(1);
+    return "User::find(1)";
 })->middleware('auth:api');
 Route::get('/phone', 'API\UserController@getUser')->middleware('auth:api');
 
